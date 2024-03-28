@@ -1,11 +1,27 @@
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from models import Todo, TodoIn
 from database import metadata, engine, database,todos
 
 metadata.create_all(engine)
 
-app = FastAPI()
+app = FastAPI(title="Fast Todo API")
+
+### CORS ################
+# Permit both client and server on the localhost but seemingly different origins.
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ### Lifecycle Events ###
 
