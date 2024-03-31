@@ -82,3 +82,4 @@ async def delete_todo(todo_id: int):
     await database.execute(query)
     new_query = todos.select()
     return await database.fetch_all(new_query)
+
